@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
+import com.ralex20015.aichatclient.util.currentTimeMillis
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -44,7 +44,7 @@ class ConversationRepositoryImpl(
     }
 
     override suspend fun createConversation(title: String, model: String): Conversation {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = currentTimeMillis()
         val conversation = Conversation(
             id = Uuid.random().toString(),
             title = title,
@@ -63,7 +63,7 @@ class ConversationRepositoryImpl(
     }
 
     override suspend fun updateConversationTitle(id: String, title: String) {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = currentTimeMillis()
         database?.conversationQueries?.updateConversation(title = title, updatedAt = now, id = id)
             ?: inMemoryConversations.update { list ->
                 list.map { if (it.id == id) it.copy(title = title, updatedAt = now) else it }
@@ -94,7 +94,7 @@ class ConversationRepositoryImpl(
         role: Message.Role,
         content: String,
     ): Message {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = currentTimeMillis()
         val message = Message(
             id = Uuid.random().toString(),
             conversationId = conversationId,

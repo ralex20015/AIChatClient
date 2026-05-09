@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -36,12 +35,6 @@ kotlin {
         binaries.executable()
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-        binaries.executable()
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
@@ -69,7 +62,6 @@ kotlin {
             implementation(libs.sqldelight.coroutines.extensions)
             // Kotlinx
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.datetime)
             // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
@@ -89,9 +81,6 @@ kotlin {
             implementation(libs.sqldelight.sqlite.driver)
         }
         jsMain.dependencies {
-            implementation(libs.ktor.client.js)
-        }
-        wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
         }
     }

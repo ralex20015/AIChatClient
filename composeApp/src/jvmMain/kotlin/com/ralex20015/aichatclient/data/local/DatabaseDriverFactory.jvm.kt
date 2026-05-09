@@ -6,7 +6,7 @@ import com.ralex20015.aichatclient.data.local.db.AIChatDatabase
 import java.io.File
 
 actual class DatabaseDriverFactory {
-    actual fun createDriver(): SqlDriver {
+    actual fun createDriver(): SqlDriver? {
         val dbDir = File(System.getProperty("user.home"), ".aichatclient")
         dbDir.mkdirs()
         val dbFile = File(dbDir, "aichat.db")
