@@ -1,0 +1,23 @@
+CREATE TABLE Conversation (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    model TEXT NOT NULL,
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER NOT NULL
+);
+
+getAllConversations:
+SELECT * FROM Conversation ORDER BY updatedAt DESC;
+
+getConversationById:
+SELECT * FROM Conversation WHERE id = ?;
+
+insertConversation:
+INSERT INTO Conversation (id, title, model, createdAt, updatedAt)
+VALUES (?, ?, ?, ?, ?);
+
+updateConversation:
+UPDATE Conversation SET title = ?, updatedAt = ? WHERE id = ?;
+
+deleteConversation:
+DELETE FROM Conversation WHERE id = ?;

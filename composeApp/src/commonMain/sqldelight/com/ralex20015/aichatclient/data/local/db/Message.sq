@@ -1,0 +1,17 @@
+CREATE TABLE Message (
+    id TEXT NOT NULL PRIMARY KEY,
+    conversationId TEXT NOT NULL REFERENCES Conversation(id) ON DELETE CASCADE,
+    role TEXT NOT NULL,
+    content TEXT NOT NULL,
+    createdAt INTEGER NOT NULL
+);
+
+getMessagesForConversation:
+SELECT * FROM Message WHERE conversationId = ? ORDER BY createdAt ASC;
+
+insertMessage:
+INSERT INTO Message (id, conversationId, role, content, createdAt)
+VALUES (?, ?, ?, ?, ?);
+
+deleteMessagesForConversation:
+DELETE FROM Message WHERE conversationId = ?;
