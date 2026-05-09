@@ -7,6 +7,7 @@ import com.ralex20015.aichatclient.data.remote.dto.TagsResponse
 import com.ralex20015.aichatclient.domain.model.Message
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -31,6 +32,11 @@ class OllamaApi(val baseUrl: String = "http://localhost:11434") {
     private val client = HttpClient {
         install(ContentNegotiation) { json(json) }
         install(Logging) { level = LogLevel.NONE }
+        install(HttpTimeout) {
+            connectTimeoutMillis = 5_000
+            requestTimeoutMillis = Long.MAX_VALUE
+            socketTimeoutMillis = Long.MAX_VALUE
+        }
     }
 
     suspend fun getTags(): TagsResponse = client.get("$baseUrl/api/tags").body()
